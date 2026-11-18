@@ -37,13 +37,18 @@ body.zen-single-tab .workspace-split.mod-root .workspace-tabs .view-header {
   display: none !important;
 }
 
-/* Zen — 文章标题：强制显示 + 吸顶（滚动时保持可见） */
+/* Zen — 文章标题：强制显示 + 吸顶，样式为居中小字（仿原 tab 标题） */
 body.zen-single-tab .inline-title {
   display: block !important;
   position: sticky;
   top: 0;
   z-index: 20;
   background: var(--background-primary);
-  padding-top: 8px;
-  padding-bottom: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  padding: 8px 0;
+  margin: 0;
 }
