@@ -3,7 +3,7 @@ import { Notice, Plugin, TFile, normalizePath } from 'obsidian';
 /** 日记根目录（vault 内） */
 const DIARY_ROOT = '个人/日记与回忆/日记';
 
-const WEEKDAYS_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const WEEKDAYS_CN = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
 /**
  * Zen 日记模块
@@ -35,7 +35,7 @@ export class ZenDiaryFeature {
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const dd = String(now.getDate()).padStart(2, '0');
     const date = `${yyyy}-${mm}-${dd}`;
-    const weekday = WEEKDAYS_EN[now.getDay()];
+    const weekday = WEEKDAYS_CN[now.getDay()];
 
     const dir = `${DIARY_ROOT}/${yyyy}/${yyyy}-${mm}`;
     const path = normalizePath(`${dir}/${date} ${weekday} 日记.md`);
@@ -43,7 +43,7 @@ export class ZenDiaryFeature {
     let file = this.app.vault.getAbstractFileByPath(path);
     if (!(file instanceof TFile)) {
       await this.ensureFolder(dir);
-      file = await this.app.vault.create(path, this.buildTemplate(now, date, weekday));
+      file = await this.app.vault.create(path, '');
       new Notice(`✅ 已创建今日日记：${date}`);
     } else {
       new Notice(`📖 打开今日日记：${date}`);
@@ -51,30 +51,6 @@ export class ZenDiaryFeature {
 
     await this.app.workspace.getLeaf(false).openFile(file as TFile);
     return file as TFile;
-  }
-
-  /** 与既有日记保持一致的模板 */
-  private buildTemplate(now: Date, date: string, weekday: string): string {
-    const hh = String(now.getHours()).padStart(2, '0');
-    const min = String(now.getMinutes()).padStart(2, '0');
-    return `---
-
----
-
->[!info]
->
->   不杀生 不偷盗 不邪淫 不妄语 不喝酒
-
----
-### 0.1 时间切片
-
-
-${date} ${hh}:${min} , ${weekday}
-
-
-
-#日记
-`;
   }
 
   /** 逐级创建文件夹（已存在则跳过） */
