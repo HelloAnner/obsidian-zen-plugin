@@ -1,4 +1,4 @@
-import { Plugin, TFile, normalizePath } from 'obsidian';
+import { Notice, Plugin, TFile, normalizePath } from 'obsidian';
 
 /** 日记根目录（vault 内） */
 const DIARY_ROOT = '个人/日记与回忆/日记';
@@ -44,6 +44,9 @@ export class ZenDiaryFeature {
     if (!(file instanceof TFile)) {
       await this.ensureFolder(dir);
       file = await this.app.vault.create(path, this.buildTemplate(now, date, weekday));
+      new Notice(`✅ 已创建今日日记：${date}`);
+    } else {
+      new Notice(`📖 打开今日日记：${date}`);
     }
 
     await this.app.workspace.getLeaf(false).openFile(file as TFile);
