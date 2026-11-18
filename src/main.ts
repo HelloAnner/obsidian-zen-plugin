@@ -3,6 +3,7 @@ import { watch, type FSWatcher } from 'fs';
 import { join } from 'path';
 import { ZenPublishFeature } from './publish/publish-feature';
 import { ZenDiaryFeature } from './diary/diary-feature';
+import { ZenSingleTabFeature } from './single-tab/single-tab-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -24,10 +25,11 @@ export default class ZenPlugin extends Plugin {
     await this.publishFeature.load();
 
     new ZenDiaryFeature(this).load();
+    new ZenSingleTabFeature(this).load();
   }
 
   private applyZenStyles() {
-    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content'];
+    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content', 'zen-single-tab'];
     for (const cls of classes) document.body.addClass(cls);
     this.register(() => {
       for (const cls of classes) document.body.removeClass(cls);

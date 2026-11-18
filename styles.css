@@ -25,3 +25,9 @@ body.zen-wide-content .markdown-source-view.mod-cm6 .cm-line {
 body.zen-wide-content .markdown-preview-view .markdown-preview-sizer {
   max-width: 94% !important;
 }
+
+/* Zen — 单文档模式：隐藏主编辑区顶部 tab 栏（标题由 inline title 显示） */
+body.zen-single-tab .workspace-split.mod-root > .workspace-tabs > .workspace-tab-header-container,
+body.zen-single-tab .workspace-split.mod-root .workspace-tabs > .workspace-tab-header-container {
+  display: none !important;
+}
