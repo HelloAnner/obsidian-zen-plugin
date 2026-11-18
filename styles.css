@@ -37,18 +37,34 @@ body.zen-single-tab .workspace-split.mod-root .workspace-tabs .view-header {
   display: none !important;
 }
 
-/* Zen — 文章标题：强制显示 + 吸顶，样式为居中小字（仿原 tab 标题） */
-body.zen-single-tab .inline-title {
-  display: block !important;
-  position: sticky;
+/* Zen — 标题栏：独立于滚动容器，固定在原 tab 区域位置（由 ZenTitleBarFeature 渲染） */
+body.zen-single-tab .workspace-split.mod-root .workspace-leaf-content {
+  position: relative;
+}
+body.zen-single-tab .zen-title-bar {
+  position: absolute;
   top: 0;
-  z-index: 20;
-  background: var(--background-primary);
-  text-align: center;
+  left: 0;
+  right: 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
   font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0;
-  padding: 8px 0;
-  margin: 0;
+  color: var(--text-normal);
+  background: var(--background-primary);
+  border-bottom: 1px solid var(--divider-color);
+  z-index: 30;
+  pointer-events: none;
+  user-select: none;
+}
+/* 正文从标题栏下方开始，滚动时从标题栏下面经过 */
+body.zen-single-tab .workspace-split.mod-root .markdown-source-view .cm-scroller,
+body.zen-single-tab .workspace-split.mod-root .markdown-preview-view {
+  padding-top: 36px;
+}
+/* 标题由独立标题栏展示，隐藏正文内的 inline title */
+body.zen-single-tab .inline-title {
+  display: none !important;
 }

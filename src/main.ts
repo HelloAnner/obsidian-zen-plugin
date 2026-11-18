@@ -4,6 +4,7 @@ import { join } from 'path';
 import { ZenPublishFeature } from './publish/publish-feature';
 import { ZenDiaryFeature } from './diary/diary-feature';
 import { ZenSingleTabFeature } from './single-tab/single-tab-feature';
+import { ZenTitleBarFeature } from './title-bar/title-bar-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -26,6 +27,7 @@ export default class ZenPlugin extends Plugin {
 
     new ZenDiaryFeature(this).load();
     new ZenSingleTabFeature(this).load();
+    new ZenTitleBarFeature(this).load();
   }
 
   private applyZenStyles() {

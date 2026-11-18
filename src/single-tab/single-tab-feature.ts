@@ -16,10 +16,6 @@ export class ZenSingleTabFeature {
   }
 
   load(): void {
-    // 显示文件标题（幂等，写入 vault 配置；setConfig 是内部 API，公开类型未声明）
-    (this.app.vault as unknown as { setConfig: (key: string, value: unknown) => void })
-      .setConfig('showInlineTitle', true);
-
     this.plugin.registerEvent(
       this.app.workspace.on('file-open', () => this.closeOtherRootLeaves())
     );
