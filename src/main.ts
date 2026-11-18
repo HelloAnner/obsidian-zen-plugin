@@ -2,6 +2,7 @@ import { Plugin } from 'obsidian';
 import { watch, type FSWatcher } from 'fs';
 import { join } from 'path';
 import { ZenPublishFeature } from './publish/publish-feature';
+import { ZenDiaryFeature } from './diary/diary-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -21,6 +22,8 @@ export default class ZenPlugin extends Plugin {
 
     this.publishFeature = new ZenPublishFeature(this);
     await this.publishFeature.load();
+
+    new ZenDiaryFeature(this).load();
   }
 
   private applyZenStyles() {
