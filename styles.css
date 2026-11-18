@@ -68,3 +68,51 @@ body.zen-single-tab .workspace-split.mod-root .markdown-preview-view {
 body.zen-single-tab .inline-title {
   display: none !important;
 }
+
+/* Zen — 纸笔墨色：白底黑字，标题/加粗/高亮统一墨色加粗，链接黑色+下划线（字号间距不动） */
+body.zen-ink .markdown-preview-view,
+body.zen-ink .markdown-source-view {
+  --zen-ink: #151515;
+  --text-normal: var(--zen-ink);
+  --text-accent: var(--zen-ink);
+  --bold-color: var(--zen-ink);
+  --italic-color: var(--zen-ink);
+  --h1-color: var(--zen-ink);
+  --h2-color: var(--zen-ink);
+  --h3-color: var(--zen-ink);
+  --h4-color: var(--zen-ink);
+  --h5-color: var(--zen-ink);
+  --h6-color: var(--zen-ink);
+  --link-color: var(--zen-ink);
+  --link-color-hover: var(--zen-ink);
+  --link-external-color: var(--zen-ink);
+  --link-unresolved-color: var(--zen-ink);
+  --text-highlight-bg: transparent;
+  color: var(--zen-ink);
+}
+
+/* 标题：黑色加粗 */
+body.zen-ink .markdown-preview-view :is(h1, h2, h3, h4, h5, h6),
+body.zen-ink .markdown-source-view :is(.cm-header-1, .cm-header-2, .cm-header-3, .cm-header-4, .cm-header-5, .cm-header-6) {
+  color: var(--zen-ink) !important;
+  font-weight: 700;
+}
+
+/* 加粗/斜体/高亮等彩色文字统一墨色，高亮去底色 */
+body.zen-ink .markdown-preview-view :is(strong, b, em, i, mark),
+body.zen-ink .markdown-source-view :is(.cm-strong, .cm-em, .cm-highlight) {
+  color: var(--zen-ink);
+}
+body.zen-ink .markdown-preview-view mark,
+body.zen-ink .markdown-source-view .cm-highlight {
+  background: transparent;
+}
+
+/* 超链接：墨色 + 下划线 */
+body.zen-ink .markdown-preview-view a,
+body.zen-ink .markdown-source-view :is(.cm-link, .cm-url) {
+  color: var(--zen-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
