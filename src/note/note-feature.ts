@@ -1,4 +1,5 @@
-import { normalizePath, Plugin, TAbstractFile } from 'obsidian';
+import { normalizePath, Notice, Plugin, TAbstractFile } from 'obsidian';
+import { join } from 'path';
 
 /**
  * Zen 笔记创建与重命名体验
@@ -16,6 +17,27 @@ export class ZenNoteFeature {
   load(): void {
     this.suppressRenamePrompt();
     this.registerCreateCommand();
+    this.registerCopyPathCommand();
+  }
+
+  /** Ctrl+Shift+C：复制当前笔记的系统绝对路径 */
+  private registerCopyPathCommand(): void {
+    this.plugin.addCommand({
+      id: 'copy-note-absolute-path',
+      name: '复制当前笔记绝对路径',
+      hotkeys: [{ modifiers: ['Ctrl', 'Shift'], key: 'c' }],
+      callback: async () => {
+        const file = this.app.workspace.getActiveFile();
+        if (!file) {
+          new Notice('❌ 没有打开的笔记');
+          return;
+        }
+        const basePath = (this.app.vault.adapter as unknown as { basePath: string }).basePath;
+        const absolutePath = join(basePath, file.path);
+        await navigator.clipboard.writeText(absolutePath);
+        new Notice(`📋 已复制：${absolutePath}`);
+      },
+    });
   }
 
   /** 新建后/右键重命名时不再弹窗；卸载插件时恢复 */
