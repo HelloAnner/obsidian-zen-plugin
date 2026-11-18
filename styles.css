@@ -56,8 +56,24 @@ body.zen-single-tab .zen-title-bar {
   background: var(--background-primary);
   border-bottom: 1px solid var(--divider-color);
   z-index: 30;
-  pointer-events: none;
   user-select: none;
+}
+/* 标题栏双击改名输入框 */
+body.zen-single-tab .zen-title-bar.is-editing {
+  cursor: text;
+}
+body.zen-single-tab .zen-title-rename-input {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  width: 60%;
+  border: none;
+  border-bottom: 1px solid var(--text-normal);
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  padding: 2px 4px;
+  color: var(--text-normal);
 }
 /* 正文从标题栏下方开始，滚动时从标题栏下面经过 */
 body.zen-single-tab .workspace-split.mod-root .markdown-source-view .cm-scroller,
