@@ -1,20 +1,26 @@
 import { Plugin } from 'obsidian';
 import { watch, type FSWatcher } from 'fs';
 import { join } from 'path';
+import { ZenPublishFeature } from './publish/publish-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
  *
- * 功能 1：隐藏左侧 Ribbon（含顶部动作区与底部 vault/帮助/设置区）
+ * 功能 1：隐藏左侧 Ribbon（含顶部动作区与底部 vault/帮助/设置区）+ 状态栏
+ * 功能 2：发布功能（KMS/飞书/Notion/GitHub/小红书），见 src/publish/
  * 内置热重载：deploy 覆盖 main.js 后自动重新加载插件，改动即时生效
  */
 export default class ZenPlugin extends Plugin {
   private watcher: FSWatcher | null = null;
   private reloadTimer: ReturnType<typeof setTimeout> | null = null;
+  private publishFeature: ZenPublishFeature | null = null;
 
   async onload() {
     this.applyZenStyles();
     this.setupHotReload();
+
+    this.publishFeature = new ZenPublishFeature(this);
+    await this.publishFeature.load();
   }
 
   private applyZenStyles() {
