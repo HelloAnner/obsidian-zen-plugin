@@ -27,11 +27,10 @@ export default class ZenPlugin extends Plugin {
   }
 
   private applyZenStyles() {
-    document.body.addClass('zen-hide-left-ribbon');
-    document.body.addClass('zen-hide-status-bar');
+    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content'];
+    for (const cls of classes) document.body.addClass(cls);
     this.register(() => {
-      document.body.removeClass('zen-hide-left-ribbon');
-      document.body.removeClass('zen-hide-status-bar');
+      for (const cls of classes) document.body.removeClass(cls);
     });
   }
 

@@ -13,3 +13,12 @@ body.zen-hide-left-ribbon .workspace-split.mod-left-split .workspace-sidedock-va
 body.zen-hide-status-bar .status-bar {
   display: none !important;
 }
+
+/* Zen — 正文宽度放宽到视口约 2/3（编辑 + 阅读模式） */
+body.zen-wide-content {
+  --file-line-width: 67%;
+}
+body.zen-wide-content .markdown-source-view.mod-cm6 .cm-content,
+body.zen-wide-content .markdown-preview-view .markdown-preview-sizer {
+  max-width: 67% !important;
+}
