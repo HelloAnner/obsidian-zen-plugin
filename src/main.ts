@@ -19,7 +19,11 @@ export default class ZenPlugin extends Plugin {
 
   private applyZenStyles() {
     document.body.addClass('zen-hide-left-ribbon');
-    this.register(() => document.body.removeClass('zen-hide-left-ribbon'));
+    document.body.addClass('zen-hide-status-bar');
+    this.register(() => {
+      document.body.removeClass('zen-hide-left-ribbon');
+      document.body.removeClass('zen-hide-status-bar');
+    });
   }
 
   /**

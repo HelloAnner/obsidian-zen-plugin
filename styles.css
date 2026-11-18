@@ -1,4 +1,15 @@
-/* Zen — 隐藏左侧 Ribbon（顶部动作图标 + 底部 vault/帮助/设置区） */
-body.zen-hide-left-ribbon .workspace-ribbon.mod-left {
-  display: none;
+/* Zen — 隐藏左侧 Ribbon（顶部动作图标列） */
+body.zen-hide-left-ribbon .workspace-ribbon.mod-left,
+body.zen-hide-left-ribbon .side-dock-settings {
+  display: none !important;
+}
+
+/* Zen — 隐藏左下角 vault 切换栏（vault 名 / 帮助 / 设置） */
+body.zen-hide-left-ribbon .workspace-split.mod-left-split .workspace-sidedock-vault-profile {
+  display: none !important;
+}
+
+/* Zen — 隐藏右下角状态栏 */
+body.zen-hide-status-bar .status-bar {
+  display: none !important;
 }
