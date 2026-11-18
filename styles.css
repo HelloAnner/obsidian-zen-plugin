@@ -31,3 +31,13 @@ body.zen-single-tab .workspace-split.mod-root > .workspace-tabs > .workspace-tab
 body.zen-single-tab .workspace-split.mod-root .workspace-tabs > .workspace-tab-header-container {
   display: none !important;
 }
+
+/* Zen — 隐藏主编辑区 view header（前进/后退箭头、空白标题区、阅读模式与更多按钮） */
+body.zen-single-tab .workspace-split.mod-root .workspace-tabs .view-header {
+  display: none !important;
+}
+
+/* Zen — 强制显示文章标题（inline title），防止主题隐藏 */
+body.zen-single-tab .inline-title {
+  display: block !important;
+}
