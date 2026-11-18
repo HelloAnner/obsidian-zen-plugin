@@ -14,14 +14,14 @@ body.zen-hide-status-bar .status-bar {
   display: none !important;
 }
 
-/* Zen — 正文宽度放宽：内容约占编辑器面板 88%（编辑 + 阅读模式）
+/* Zen — 正文宽度放宽：内容约占编辑器面板 94%（编辑 + 阅读模式）
    注意：不能给 --file-line-width 赋百分比，它会同时套在 .cm-content 与 .cm-line 上导致嵌套相乘 */
 body.zen-wide-content .markdown-source-view.mod-cm6 .cm-content {
-  max-width: 88% !important;
+  max-width: 94% !important;
 }
 body.zen-wide-content .markdown-source-view.mod-cm6 .cm-line {
   max-width: 100% !important;
 }
 body.zen-wide-content .markdown-preview-view .markdown-preview-sizer {
-  max-width: 88% !important;
+  max-width: 94% !important;
 }
