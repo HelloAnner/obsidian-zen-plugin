@@ -8,6 +8,7 @@ import { ZenTitleBarFeature } from './title-bar/title-bar-feature';
 import { ZenNoteFeature } from './note/note-feature';
 import { ZenImageLightboxFeature } from './image-lightbox/image-lightbox-feature';
 import { ZenHeadingNumbersFeature } from './heading-numbers/heading-numbers-feature';
+import { ZenHighlightFeature } from './highlight/highlight-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -34,6 +35,7 @@ export default class ZenPlugin extends Plugin {
     new ZenNoteFeature(this).load();
     new ZenImageLightboxFeature(this).load();
     new ZenHeadingNumbersFeature(this).load();
+    new ZenHighlightFeature(this).load();
   }
 
   private applyZenStyles() {

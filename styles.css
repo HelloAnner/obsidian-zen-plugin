@@ -103,7 +103,7 @@ body.zen-ink .markdown-source-view {
   --link-color-hover: var(--zen-ink);
   --link-external-color: var(--zen-ink);
   --link-unresolved-color: var(--zen-ink);
-  --text-highlight-bg: transparent;
+  --text-highlight-bg: rgba(255, 213, 79, 0.45); /* 马克笔黄 */
   color: var(--zen-ink);
 }
 
@@ -119,9 +119,13 @@ body.zen-ink .markdown-preview-view :is(strong, b, em, i, mark),
 body.zen-ink .markdown-source-view :is(.cm-strong, .cm-em, .cm-highlight) {
   color: var(--zen-ink);
 }
+/* 马克笔高亮：黄底黑字（Cmd+Shift+H 切换） */
 body.zen-ink .markdown-preview-view mark,
 body.zen-ink .markdown-source-view .cm-highlight {
-  background: transparent;
+  background: rgba(255, 213, 79, 0.45);
+  color: var(--zen-ink);
+  border-radius: 2px;
+  padding: 0 1px;
 }
 
 /* 编辑模式：整行（含加粗、语法标记等一切 span）强制墨色 —— 纸笔感 */
