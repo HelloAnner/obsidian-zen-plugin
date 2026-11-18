@@ -1,0 +1,17 @@
+{
+  "name": "obsidian-zen-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "自己高度定制的 Obsidian 插件",
+  "scripts": {
+    "dev": "esbuild src/main.ts --bundle --external:obsidian --external:fs --external:path --format=cjs --target=es2018 --outfile=main.js --watch",
+    "build": "esbuild src/main.ts --bundle --external:obsidian --external:fs --external:path --format=cjs --target=es2018 --minify --outfile=main.js",
+    "deploy": "npm run build && node scripts/install.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.24.0",
+    "obsidian": "^1.7.0",
+    "typescript": "^5.6.0"
+  }
+}

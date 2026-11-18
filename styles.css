@@ -1,0 +1,4 @@
+/* Zen — 隐藏左侧 Ribbon（顶部动作图标 + 底部 vault/帮助/设置区） */
+body.zen-hide-left-ribbon .workspace-ribbon.mod-left {
+  display: none;
+}

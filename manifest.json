@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-zen-plugin",
+  "name": "Zen",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "自己高度定制的 Obsidian 插件",
+  "author": "Anner",
+  "isDesktopOnly": true
+}
