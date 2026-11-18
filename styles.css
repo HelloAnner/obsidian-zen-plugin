@@ -187,8 +187,11 @@ body.zen-hide-side-headers .workspace-split.mod-right-split .nav-header {
 
 
 /* Zen — 波浪下划线（Cmd+Shift+U） */
+body.zen-ink u.zen-wavy,
 body.zen-ink .markdown-preview-view u.zen-wavy {
-  text-decoration: underline wavy var(--zen-ink);
+  text-decoration-line: underline !important;
+  text-decoration-style: wavy !important;
+  text-decoration-color: #151515 !important;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
   text-decoration-skip-ink: none;
