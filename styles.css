@@ -124,6 +124,12 @@ body.zen-ink .markdown-source-view .cm-highlight {
   background: transparent;
 }
 
+/* 编辑模式：整行（含加粗、语法标记等一切 span）强制墨色 —— 纸笔感 */
+body.zen-ink .markdown-source-view .cm-line,
+body.zen-ink .markdown-source-view .cm-line span {
+  color: var(--zen-ink) !important;
+}
+
 /* 超链接：墨色 + 下划线 */
 body.zen-ink .markdown-preview-view a,
 body.zen-ink .markdown-source-view :is(.cm-link, .cm-url) {
