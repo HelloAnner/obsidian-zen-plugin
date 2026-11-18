@@ -1,91 +1,94 @@
-import { Plugin } from 'obsidian';
-import { syntaxTree } from '@codemirror/language';
-import { RangeSetBuilder } from '@codemirror/state';
-import {
-  Decoration,
-  EditorView,
-  ViewPlugin,
-  WidgetType,
-  type DecorationSet,
-  type ViewUpdate,
-} from '@codemirror/view';
+import { MarkdownView, Plugin } from 'obsidian';
 
 /**
- * Zen 标题自动编号
- * 约定：H2(##) 是顶层章节 → 1. 2. 3.；H3 → 1.1；H4 → 1.1.1 …（H1 不编号）
- * 阅读模式由 CSS 计数器渲染（styles.css，zen-heading-numbers）；
- * 编辑模式（Live Preview/源码）由本 CM6 插件按语法树计算（CSS 计数器在虚拟滚动下会错乱）。
+ * Zen 标题自动编号（写入源文）
+ * 约定：H2(##) 是顶层章节 → `## 1. xxx`；H3 → `### 1.1 xxx`；H4 → `### 1.1.1 xxx` …（H1 不编号）
+ *
+ * 触发：打开笔记 / 编辑停顿（防抖 800ms）时扫描当前笔记，
+ * 用单个 CM 事务改写不一致的标题行（一次 undo 可全部撤销）。
+ * 正被编辑的行跳过，待光标移开后下一轮扫描修正。
  */
 export class ZenHeadingNumbersFeature {
+  private timer: ReturnType<typeof setTimeout> | null = null;
+
   constructor(private plugin: Plugin) {}
 
+  private get app() {
+    return this.plugin.app;
+  }
+
   load(): void {
-    this.plugin.registerEditorExtension([headingNumberViewPlugin]);
+    this.plugin.registerEvent(
+      this.app.workspace.on('file-open', () => this.scheduleScan(300))
+    );
+    this.plugin.registerEvent(
+      this.app.workspace.on('editor-change', () => this.scheduleScan(800))
+    );
+    this.app.workspace.onLayoutReady(() => this.scheduleScan(500));
   }
-}
 
-class HeadingNumberWidget extends WidgetType {
-  constructor(private text: string) {
-    super();
+  private scheduleScan(delay: number): void {
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.scanActiveNote(), delay);
   }
-  eq(other: HeadingNumberWidget): boolean {
-    return other.text === this.text;
-  }
-  toDOM(): HTMLElement {
-    const span = document.createElement('span');
-    span.className = 'zen-heading-number';
-    span.textContent = this.text;
-    return span;
-  }
-}
 
-const HEADING_RE = /^ATXHeading([1-6])$/;
+  private scanActiveNote(): void {
+    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (!view) return;
+    const editor = view.editor;
+    const cursorLine = editor.getCursor().line;
 
-function buildDecorations(view: EditorView): DecorationSet {
-  const counters = [0, 0, 0, 0, 0, 0, 0]; // 下标 = 标题级别
-  const builder = new RangeSetBuilder<Decoration>();
+    const counters = [0, 0, 0, 0, 0, 0, 0]; // 下标 = 标题级别
+    const edits: { line: number; text: string }[] = [];
+    let inFrontmatter = false;
+    let inCodeBlock = false;
 
-  syntaxTree(view.state).iterate({
-    enter: (node) => {
-      const m = HEADING_RE.exec(node.name);
-      if (!m) return;
-      const level = Number(m[1]);
-      if (level === 1) return; // H1 不编号
+    for (let i = 0; i < editor.lineCount(); i++) {
+      const text = editor.getLine(i);
+      const trimmed = text.trim();
+
+      // 跳过 frontmatter 与代码块
+      if (i === 0 && trimmed === '---') { inFrontmatter = true; continue; }
+      if (inFrontmatter) {
+        if (trimmed === '---' || trimmed === '...') inFrontmatter = false;
+        continue;
+      }
+      if (trimmed.startsWith('```')) { inCodeBlock = !inCodeBlock; continue; }
+      if (inCodeBlock) continue;
+
+      const m = /^(#{1,6})\s+(.*)$/.exec(text);
+      if (!m) continue;
+      const level = m[1].length;
+      if (level === 1) continue; // H1 不编号
 
       counters[level]++;
       for (let l = level + 1; l <= 6; l++) counters[l] = 0;
 
-      // 顶层 H2 显示 "1. "，更深层级显示 "1.1 " / "1.1.1 "
-      const text =
+      // 剥掉已有数字前缀（必须带点，避免误伤「## 2026 年计划」这类纯数字开头）
+      const body = m[2].replace(/^\d+(?:\.\d+)+\.?\s+|^\d+\.\s+/, '');
+      const prefix =
         level === 2
           ? `${counters[2]}. `
-          : `${Array.from({ length: level - 1 }, (_, i) => counters[i + 2]).join('.')} `;
+          : `${Array.from({ length: level - 1 }, (_, k) => counters[k + 2]).join('.')} `;
+      const expected = `${m[1]} ${prefix}${body}`;
 
-      builder.add(
-        node.from,
-        node.from,
-        Decoration.widget({ widget: new HeadingNumberWidget(text), side: -1 })
-      );
-    },
-  });
-
-  return builder.finish();
-}
-
-const headingNumberViewPlugin = ViewPlugin.fromClass(
-  class {
-    decorations: DecorationSet;
-
-    constructor(view: EditorView) {
-      this.decorations = buildDecorations(view);
-    }
-
-    update(u: ViewUpdate): void {
-      const treeChanged = syntaxTree(u.state) !== syntaxTree(u.startState);
-      if (u.docChanged || u.viewportChanged || treeChanged) {
-        this.decorations = buildDecorations(u.view);
+      if (expected !== text && i !== cursorLine) {
+        edits.push({ line: i, text: expected });
       }
     }
-  },
-  { decorations: (v) => v.decorations }
-);
+
+    if (edits.length === 0) return;
+
+    // 单个 CM 事务应用全部改动：光标自动重映射，一次 undo 撤销
+    const cm = (editor as unknown as { cm?: any }).cm;
+    if (cm?.dispatch && cm.state?.doc) {
+      const changes = edits.map((e) => {
+        const line = cm.state.doc.line(e.line + 1);
+        return { from: line.from, to: line.to, insert: e.text };
+      });
+      cm.dispatch({ changes });
+    } else {
+      for (const e of edits) editor.setLine(e.line, e.text);
+    }
+  }
+}
