@@ -172,3 +172,11 @@ body.zen-ink .markdown-source-view :is(.cm-link, .cm-url) {
   max-height: none;
   cursor: zoom-out;
 }
+
+/* Zen — 隐藏左右侧边栏面板头部（文件列表操作按钮、大纲搜索/关闭等） */
+body.zen-hide-side-headers .workspace-split.mod-left-split .view-header,
+body.zen-hide-side-headers .workspace-split.mod-right-split .view-header,
+body.zen-hide-side-headers .workspace-split.mod-left-split .nav-header,
+body.zen-hide-side-headers .workspace-split.mod-right-split .nav-header {
+  display: none !important;
+}

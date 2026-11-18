@@ -35,7 +35,7 @@ export default class ZenPlugin extends Plugin {
   }
 
   private applyZenStyles() {
-    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content', 'zen-single-tab', 'zen-ink'];
+    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content', 'zen-single-tab', 'zen-ink', 'zen-hide-side-headers'];
     for (const cls of classes) document.body.addClass(cls);
     this.register(() => {
       for (const cls of classes) document.body.removeClass(cls);
