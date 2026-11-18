@@ -7,6 +7,7 @@ import { ZenSingleTabFeature } from './single-tab/single-tab-feature';
 import { ZenTitleBarFeature } from './title-bar/title-bar-feature';
 import { ZenNoteFeature } from './note/note-feature';
 import { ZenImageLightboxFeature } from './image-lightbox/image-lightbox-feature';
+import { ZenHeadingNumbersFeature } from './heading-numbers/heading-numbers-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -32,10 +33,11 @@ export default class ZenPlugin extends Plugin {
     new ZenTitleBarFeature(this).load();
     new ZenNoteFeature(this).load();
     new ZenImageLightboxFeature(this).load();
+    new ZenHeadingNumbersFeature(this).load();
   }
 
   private applyZenStyles() {
-    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content', 'zen-single-tab', 'zen-ink', 'zen-hide-side-headers'];
+    const classes = ['zen-hide-left-ribbon', 'zen-hide-status-bar', 'zen-wide-content', 'zen-single-tab', 'zen-ink', 'zen-hide-side-headers', 'zen-heading-numbers'];
     for (const cls of classes) document.body.addClass(cls);
     this.register(() => {
       for (const cls of classes) document.body.removeClass(cls);
