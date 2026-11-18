@@ -6,6 +6,7 @@ import { ZenDiaryFeature } from './diary/diary-feature';
 import { ZenSingleTabFeature } from './single-tab/single-tab-feature';
 import { ZenTitleBarFeature } from './title-bar/title-bar-feature';
 import { ZenNoteFeature } from './note/note-feature';
+import { ZenImageLightboxFeature } from './image-lightbox/image-lightbox-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -30,6 +31,7 @@ export default class ZenPlugin extends Plugin {
     new ZenSingleTabFeature(this).load();
     new ZenTitleBarFeature(this).load();
     new ZenNoteFeature(this).load();
+    new ZenImageLightboxFeature(this).load();
   }
 
   private applyZenStyles() {

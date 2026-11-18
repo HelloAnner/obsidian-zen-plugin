@@ -138,3 +138,37 @@ body.zen-ink .markdown-source-view :is(.cm-link, .cm-url) {
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
+
+/* Zen — 图片灯箱：双击大图查看 */
+.zen-lightbox-modal {
+  width: auto;
+  max-width: 94vw;
+  max-height: 92vh;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: auto;
+}
+.zen-lightbox-modal .modal-close-button {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+.zen-lightbox-modal img {
+  display: block;
+  max-width: 94vw;
+  max-height: 88vh;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+/* 点击图片切换为原始尺寸（可滚动查看细节） */
+.zen-lightbox-modal.is-natural-size {
+  max-width: none;
+  max-height: none;
+}
+.zen-lightbox-modal.is-natural-size img {
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
