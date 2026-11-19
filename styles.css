@@ -221,3 +221,16 @@ body.zen-ink .markdown-preview-view table mark {
   border-radius: 2px;
   padding: 0 1px;
 }
+
+/* Zen — 文件树行内改名输入框 */
+.zen-tree-rename-input {
+  width: 100%;
+  font-size: var(--nav-item-size);
+  padding: 0 2px;
+  border: 1px solid var(--text-normal);
+  border-radius: 3px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  outline: none;
+  box-shadow: none;
+}
