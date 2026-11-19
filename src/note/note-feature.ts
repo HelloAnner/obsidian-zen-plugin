@@ -102,6 +102,7 @@ export class ZenNoteFeature {
 
     const contentEl = el.querySelector<HTMLElement>('.nav-file-title-content');
     if (contentEl) contentEl.style.display = 'none';
+    el.classList.add('zen-renaming');
 
     const input = document.createElement('input');
     input.className = 'zen-tree-rename-input';
@@ -116,6 +117,7 @@ export class ZenNoteFeature {
       settled = true;
       const newName = input.value.trim();
       input.remove();
+      el.classList.remove('zen-renaming');
       if (contentEl) contentEl.style.display = '';
 
       if (!commit || !newName || newName === file.basename) return;

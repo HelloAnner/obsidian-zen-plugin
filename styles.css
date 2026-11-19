@@ -223,7 +223,7 @@ body.zen-ink .markdown-preview-view table mark {
 }
 
 /* Zen — 文件树行内改名：仿原生（整行高亮边框 + 透明输入框，字体继承树条目） */
-.nav-file-title:has(.zen-tree-rename-input) {
+.nav-file-title.zen-renaming {
   box-shadow: 0 0 0 2px var(--interactive-accent);
   border-radius: 4px;
   background: var(--background-modifier-hover);
