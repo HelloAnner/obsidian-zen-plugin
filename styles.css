@@ -222,15 +222,25 @@ body.zen-ink .markdown-preview-view table mark {
   padding: 0 1px;
 }
 
-/* Zen — 文件树行内改名输入框 */
+/* Zen — 文件树行内改名：仿原生（整行高亮边框 + 透明输入框，字体继承树条目） */
+.nav-file-title:has(.zen-tree-rename-input) {
+  box-shadow: 0 0 0 2px var(--interactive-accent);
+  border-radius: 4px;
+  background: var(--background-modifier-hover);
+}
 .zen-tree-rename-input {
   width: 100%;
-  font-size: var(--nav-item-size);
-  padding: 0 2px;
-  border: 1px solid var(--text-normal);
-  border-radius: 3px;
-  background: var(--background-primary);
-  color: var(--text-normal);
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
   outline: none;
   box-shadow: none;
+}
+.zen-tree-rename-input::selection {
+  background: var(--text-selection);
 }
