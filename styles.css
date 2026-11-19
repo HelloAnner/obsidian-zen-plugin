@@ -244,3 +244,8 @@ body.zen-ink .markdown-preview-view table mark {
 .zen-tree-rename-input::selection {
   background: var(--text-selection);
 }
+
+/* Zen — 文件树滚动条预留位置：展开文件夹时不再因滚动条出现而抖动 */
+.nav-files-container {
+  scrollbar-gutter: stable;
+}
