@@ -208,3 +208,16 @@ body.zen-ink .markdown-preview-view del,
 body.zen-ink .markdown-source-view .cm-strikethrough {
   color: var(--zen-ink);
 }
+
+/* Zen — 表格内的墨色与马克笔高亮（编辑模式 table widget 不在 .cm-line 体系内，单独覆盖） */
+body.zen-ink .markdown-source-view table,
+body.zen-ink .markdown-source-view table * {
+  color: var(--zen-ink) !important;
+}
+body.zen-ink .markdown-source-view table mark,
+body.zen-ink .markdown-preview-view table mark {
+  background: var(--zen-ink-marker) !important;
+  color: var(--zen-ink) !important;
+  border-radius: 2px;
+  padding: 0 1px;
+}
