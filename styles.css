@@ -89,6 +89,7 @@ body.zen-single-tab .inline-title {
 body.zen-ink .markdown-preview-view,
 body.zen-ink .markdown-source-view {
   --zen-ink: #151515;
+  --zen-ink-marker: rgba(255, 213, 79, 0.45); /* 马克笔黄 */
   --text-normal: var(--zen-ink);
   --text-accent: var(--zen-ink);
   --bold-color: var(--zen-ink);
@@ -103,8 +104,14 @@ body.zen-ink .markdown-source-view {
   --link-color-hover: var(--zen-ink);
   --link-external-color: var(--zen-ink);
   --link-unresolved-color: var(--zen-ink);
-  --text-highlight-bg: rgba(255, 213, 79, 0.45); /* 马克笔黄 */
+  --text-highlight-bg: var(--zen-ink-marker);
   color: var(--zen-ink);
+}
+/* 暗色主题：墨色翻转为纸白，马克笔黄略降透明度 */
+body.zen-ink.theme-dark .markdown-preview-view,
+body.zen-ink.theme-dark .markdown-source-view {
+  --zen-ink: #e8e2d5;
+  --zen-ink-marker: rgba(255, 213, 79, 0.3);
 }
 
 /* 标题：黑色加粗 */
@@ -119,10 +126,10 @@ body.zen-ink .markdown-preview-view :is(strong, b, em, i, mark),
 body.zen-ink .markdown-source-view :is(.cm-strong, .cm-em, .cm-highlight) {
   color: var(--zen-ink);
 }
-/* 马克笔高亮：黄底黑字（Cmd+Shift+H 切换） */
+/* 马克笔高亮：黄底墨字（Cmd+Shift+H 切换；暗色下自动翻转为纸白字） */
 body.zen-ink .markdown-preview-view mark,
 body.zen-ink .markdown-source-view .cm-highlight {
-  background: rgba(255, 213, 79, 0.45);
+  background: var(--zen-ink-marker);
   color: var(--zen-ink);
   border-radius: 2px;
   padding: 0 1px;
@@ -191,7 +198,7 @@ body.zen-ink u.zen-wavy,
 body.zen-ink .markdown-preview-view u.zen-wavy {
   text-decoration-line: underline !important;
   text-decoration-style: wavy !important;
-  text-decoration-color: #151515 !important;
+  text-decoration-color: var(--zen-ink, #151515) !important;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
   text-decoration-skip-ink: none;
