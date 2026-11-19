@@ -249,3 +249,15 @@ body.zen-ink .markdown-preview-view table mark {
 .nav-files-container {
   scrollbar-gutter: stable;
 }
+
+/* Zen — 左侧栏防抖动（加强版）：所有滚动容器预留滚动条位置，长文件名不触发横向滚动条 */
+.workspace-split.mod-left-split .workspace-tabs,
+.workspace-split.mod-left-split .workspace-tab-container,
+.workspace-split.mod-left-split .workspace-leaf-content,
+.workspace-split.mod-left-split .view-content,
+.workspace-split.mod-left-split .nav-files-container {
+  scrollbar-gutter: stable;
+}
+.workspace-split.mod-left-split .nav-files-container {
+  overflow-x: hidden;
+}
