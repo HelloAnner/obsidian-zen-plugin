@@ -261,3 +261,15 @@ body.zen-ink .markdown-preview-view table mark {
 .workspace-split.mod-left-split .nav-files-container {
   overflow-x: hidden;
 }
+
+/* Zen — 修复文件树展开抖动：掐掉主题/核心的展开动画与平滑滚动（整栏滑动+文字闪烁的根源） */
+.nav-files-container {
+  scroll-behavior: auto !important;
+}
+.nav-files-container,
+.nav-files-container *,
+.nav-folder-children,
+.nav-folder-children * {
+  transition: none !important;
+  animation: none !important;
+}
