@@ -2,6 +2,7 @@ import { Prec } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { MarkdownView, Notice, Plugin, TFile, type WorkspaceLeaf } from 'obsidian';
 import { getSessionStore, type NoteDirection, type NoteSwitcherStore } from './store';
+import { getSessionPositions } from './positions';
 import { NOTE_SWITCHER_VIEW, NoteSwitcherView } from './view';
 
 export class ZenNoteSwitcherFeature {
@@ -101,7 +102,17 @@ export class ZenNoteSwitcherFeature {
     });
     // Never replace the sidebar/custom root view when its row has focus.
     leaf ??= workspace.getLeaf('tab');
-    await leaf.openFile(file, { active: true });
+    const positions = getSessionPositions(this.plugin.app);
+    if (leaf.view instanceof MarkdownView && leaf.view.file) {
+      // Capture immediately before replacement, including scroll-only changes.
+      positions.remember(leaf.view.file, leaf.view);
+      if (leaf.view.file === file) {
+        workspace.setActiveLeaf(leaf, { focus: true });
+        this.store.visit(file.path);
+        return;
+      }
+    }
+    await leaf.openFile(file, { ...positions.recall(file), active: true });
     if (!this.disposed) this.store.visit(file.path);
   }
 

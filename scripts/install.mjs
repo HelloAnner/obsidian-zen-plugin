@@ -7,7 +7,9 @@ import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const VAULT = resolve(root, '../notes/soul');
+const VAULT = process.env.OBSIDIAN_VAULT_PATH
+  ? resolve(process.env.OBSIDIAN_VAULT_PATH)
+  : resolve(root, '../notes/soul');
 const PLUGIN_ID = 'obsidian-zen-plugin';
 const pluginDir = join(VAULT, '.obsidian', 'plugins', PLUGIN_ID);
 
