@@ -115,6 +115,30 @@ body.zen-ink.theme-dark .markdown-source-view {
   --zen-ink-marker: rgba(255, 213, 79, 0.3);
 }
 
+/* 无序列表统一为清晰实心圆点，不改变正文、编号和任务复选框。 */
+body.zen-ink .markdown-preview-view,
+body.zen-ink .markdown-source-view {
+  --list-marker-color: var(--zen-ink);
+  --list-marker-color-hover: var(--zen-ink);
+  --list-marker-color-collapsed: var(--zen-ink);
+}
+body.zen-ink :is(.markdown-preview-view, .markdown-source-view) .list-bullet {
+  color: transparent;
+  text-shadow: none;
+}
+body.zen-ink :is(.markdown-preview-view, .markdown-source-view) .list-bullet::after {
+  width: 0.34em;
+  height: 0.34em;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--zen-ink);
+  box-shadow: none;
+}
+body.zen-ink .markdown-rendered ul > li:not(.task-list-item)::marker {
+  color: var(--zen-ink);
+  font-weight: 700;
+}
+
 /* 标题：黑色加粗 */
 body.zen-ink .markdown-preview-view :is(h1, h2, h3, h4, h5, h6),
 body.zen-ink .markdown-source-view :is(.cm-header-1, .cm-header-2, .cm-header-3, .cm-header-4, .cm-header-5, .cm-header-6) {
