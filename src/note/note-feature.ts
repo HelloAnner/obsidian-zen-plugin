@@ -6,7 +6,7 @@ import { join } from 'path';
  *  - 屏蔽 Obsidian 的「重命名」弹窗（promptForFileRename）
  *  - 新建笔记直接叫「未命名」，并自动在左侧文件树进入行内改名（焦点在文件名上）
  *  - 右键重命名也改为文件树行内改名（由 promptForFileRename 转发）
- *  - Ctrl+Shift+C：复制当前笔记的系统绝对路径
+ *  - Cmd+Shift+C：复制当前笔记的系统绝对路径
  *  - 标题栏双击改名仍然可用（见 title-bar-feature）
  */
 export class ZenNoteFeature {
@@ -31,12 +31,12 @@ export class ZenNoteFeature {
     );
   }
 
-  /** Ctrl+Shift+C：复制当前笔记的系统绝对路径 */
+  /** Cmd+Shift+C：复制当前笔记的系统绝对路径 */
   private registerCopyPathCommand(): void {
     this.plugin.addCommand({
       id: 'copy-note-absolute-path',
       name: '复制当前笔记绝对路径',
-      hotkeys: [{ modifiers: ['Ctrl', 'Shift'], key: 'c' }],
+      hotkeys: [{ modifiers: ['Mod', 'Shift'], key: 'c' }],
       callback: async () => {
         const file = this.app.workspace.getActiveFile();
         if (!file) {

@@ -11,6 +11,17 @@ export class ZenQuickInputFeature {
 
   load(): void {
     this.plugin.addCommand({
+      id: 'quick-codeblock',
+      name: '插入代码块',
+      hotkeys: [{ modifiers: ['Ctrl', 'Shift'], key: 'c' }],
+      editorCallback: () => {
+        const commands = (this.plugin.app as unknown as {
+          commands: { executeCommandById(id: string): boolean };
+        }).commands;
+        commands.executeCommandById('editor:insert-codeblock');
+      },
+    });
+    this.plugin.addCommand({
       id: 'quick-todo',
       name: '快速输入待办事项',
       hotkeys: [{ modifiers: ['Ctrl'], key: 'Enter' }],
