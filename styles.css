@@ -1,5 +1,6 @@
-/* Zen — 隐藏左侧 Ribbon（顶部动作图标列） */
+/* Zen — 隐藏左侧 Ribbon（旧版 mod-left，新版 mod-primary） */
 body.zen-hide-left-ribbon .workspace-ribbon.mod-left,
+body.zen-hide-left-ribbon .workspace-ribbon.mod-primary,
 body.zen-hide-left-ribbon .side-dock-settings {
   display: none !important;
 }
