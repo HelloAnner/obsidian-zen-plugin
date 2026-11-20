@@ -11,6 +11,7 @@ import { ZenHeadingNumbersFeature } from './heading-numbers/heading-numbers-feat
 import { ZenHighlightFeature } from './highlight/highlight-feature';
 import { ZenOutlineFeature } from './outline/outline-feature';
 import { ZenNoteSwitcherFeature } from './note-switcher/note-switcher-feature';
+import { ZenFileRevealFeature } from './file-reveal/file-reveal-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -40,6 +41,7 @@ export default class ZenPlugin extends Plugin {
     new ZenHighlightFeature(this).load();
     new ZenOutlineFeature(this).load();
     new ZenNoteSwitcherFeature(this).load();
+    new ZenFileRevealFeature(this).load();
   }
 
   private applyZenStyles() {

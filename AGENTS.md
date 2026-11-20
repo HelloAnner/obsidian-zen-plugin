@@ -34,6 +34,7 @@ npm run deploy
 ## 结构
 
 - `src/main.ts` — 插件入口（Plugin 子类）：界面定制 + 热重载 + 挂载各 feature
+- `src/file-reveal/` — 切换笔记时展开左侧文件树祖先目录并居中当前行；使用原生虚拟树定位，不抢编辑器焦点，不使用平滑滚动。接近滚动首尾时以实际可滚动范围为准。
 - `src/note-switcher/` — 会话内固定顺序笔记列表：独立状态模型、原生 ItemView、事件与快捷键控制；页签布局复用 Obsidian 原生拖拽分栏，不自行实现停靠布局。
 - `src/publish/` — 发布功能模块（移植自 obsidian-publish-everywhere，已改名 ZenPublishFeature）
   - `publish-feature.ts` — 模块入口，通过 shim（app/addCommand/loadData…）挂在 ZenPlugin 上
