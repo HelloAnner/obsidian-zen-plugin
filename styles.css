@@ -115,7 +115,7 @@ body.zen-ink.theme-dark .markdown-source-view {
   --zen-ink-marker: rgba(255, 213, 79, 0.3);
 }
 
-/* 无序列表统一为清晰实心圆点，不改变正文、编号和任务复选框。 */
+/* 列表层级：一级实心圆，嵌套空心圆；数字编号与任务复选框保持原生。 */
 body.zen-ink .markdown-preview-view,
 body.zen-ink .markdown-source-view {
   --list-marker-color: var(--zen-ink);
@@ -123,21 +123,31 @@ body.zen-ink .markdown-source-view {
   --list-marker-color-collapsed: var(--zen-ink);
 }
 body.zen-ink :is(.markdown-preview-view, .markdown-source-view) .list-bullet {
-  color: transparent;
+  color: transparent !important;
+  font-size: 0;
   text-shadow: none;
 }
 body.zen-ink :is(.markdown-preview-view, .markdown-source-view) .list-bullet::after {
-  width: 0.34em;
-  height: 0.34em;
+  width: 5px;
+  height: 5px;
+  box-sizing: border-box;
   border: 0;
   border-radius: 50%;
-  background-color: var(--zen-ink);
+  background: var(--zen-ink);
   box-shadow: none;
+}
+body.zen-ink .markdown-source-view :is(.cm-list-2, .cm-list-3) > .list-bullet::after,
+body.zen-ink .markdown-preview-view :is(ul, ol) :is(ul, ol) .list-bullet::after {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+  border: 1px solid var(--zen-ink);
 }
 body.zen-ink .markdown-rendered ul > li:not(.task-list-item)::marker {
   color: var(--zen-ink);
-  font-weight: 700;
 }
+body.zen-ink .markdown-rendered ul { list-style-type: disc; }
+body.zen-ink .markdown-rendered :is(ul, ol) ul { list-style-type: circle; }
 
 /* 标题：黑色加粗 */
 body.zen-ink .markdown-preview-view :is(h1, h2, h3, h4, h5, h6),
