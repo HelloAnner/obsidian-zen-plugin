@@ -3,18 +3,22 @@ import { EditorView } from '@codemirror/view';
 import { MarkdownView, Notice, Plugin, TFile, type WorkspaceLeaf } from 'obsidian';
 import { getSessionStore, type NoteDirection, type NoteSwitcherStore } from './store';
 import { NOTE_SWITCHER_VIEW, NoteSwitcherView } from './view';
+import { NotePositions } from './note-positions';
 
 export class ZenNoteSwitcherFeature {
   private store: NoteSwitcherStore;
   private queue: Promise<void> = Promise.resolve();
   private disposed = false;
+  private positions: NotePositions;
 
   constructor(private plugin: Plugin) {
     this.store = getSessionStore(plugin.app);
+    this.positions = new NotePositions(plugin);
   }
 
   load(): void {
     const { workspace, vault } = this.plugin.app;
+    this.positions.load();
     this.plugin.register(() => { this.disposed = true; });
     this.plugin.registerView(NOTE_SWITCHER_VIEW, (leaf) => new NoteSwitcherView(leaf, this.store, {
       open: (path) => this.enqueue(() => this.open(path)),
@@ -101,7 +105,9 @@ export class ZenNoteSwitcherFeature {
     });
     // Never replace the sidebar/custom root view when its row has focus.
     leaf ??= workspace.getLeaf('tab');
-    await leaf.openFile(file, { active: true });
+    this.positions.save(leaf);
+    const saved = this.positions.get(path);
+    await leaf.openFile(file, { active: true, state: saved ? { ...saved.state, file: path } : undefined, eState: saved?.ephemeral });
     if (!this.disposed) this.store.visit(file.path);
   }
 
