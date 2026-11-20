@@ -93,11 +93,32 @@ export class ZenHeadingNumbersFeature {
         const line = cm.state.doc.line(e.line + 1);
         return { from: line.from + e.prefixFromCh, to: line.from + e.prefixToCh, insert: e.insert };
       });
-      cm.dispatch({ changes });
+      // Insertion at the caret must associate to the right, so a newly
+      // generated number stays before the caret rather than after it.
+      const changeSet = cm.state.changes(changes);
+      cm.dispatch({ changes: changeSet, selection: cm.state.selection.map(changeSet.desc, 1) });
     } else {
-      for (const e of edits) {
-        editor.replaceRange(e.insert, { line: e.line, ch: e.prefixFromCh }, { line: e.line, ch: e.prefixToCh });
-      }
+      const mapPosition = (position: { line: number; ch: number }) => {
+        const edit = edits.find((e) => e.line === position.line);
+        if (!edit || position.ch < edit.prefixFromCh) return { ...position };
+        return {
+          line: position.line,
+          ch: position.ch <= edit.prefixToCh
+            ? edit.prefixFromCh + edit.insert.length
+            : position.ch + edit.insert.length - (edit.prefixToCh - edit.prefixFromCh),
+        };
+      };
+      const selections = editor.listSelections().map(({ anchor, head }) => ({
+        from: mapPosition(anchor), to: mapPosition(head),
+      }));
+      editor.transaction({
+        changes: edits.map((e) => ({
+          from: { line: e.line, ch: e.prefixFromCh },
+          to: { line: e.line, ch: e.prefixToCh },
+          text: e.insert,
+        })),
+        selections,
+      });
     }
   }
 }
