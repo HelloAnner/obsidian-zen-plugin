@@ -419,8 +419,8 @@ body.zen-ink.theme-dark {
 body.zen-ink .markdown-preview-view pre {
   background: var(--zen-code-bg);
   border: 1px solid var(--zen-code-border);
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 5px;
+  padding: 10px 12px;
 }
 /* 编辑模式代码块背景行 */
 body.zen-ink .markdown-source-view .HyperMD-codeblock-bg {
@@ -441,23 +441,29 @@ body.zen-ink .markdown-source-view .HyperMD-codeblock-bg {
 /* Zen — 技术文档排版：常规正文、清晰层级、紧凑列表与青绿行内代码。 */
 body.zen-ink .markdown-preview-view,
 body.zen-ink .markdown-source-view {
-  --font-text-size: 16px;
+  --font-text-size: 15px;
   --font-normal: 400;
-  --line-height-normal: 1.65;
-  --line-height: 1.65;
-  --p-spacing: 0.85em;
-  --list-spacing: 0.18em;
+  --line-height-normal: 1.5;
+  --line-height: 1.5;
+  --p-spacing: 0.6em;
+  --list-spacing: 0.1em;
   --list-indent: 1.8em;
-  --heading-spacing: 1.4em;
-  --h1-size: 1.8em;
-  --h2-size: 1.5em;
-  --h3-size: 1.25em;
-  --h4-size: 1.1em;
+  --heading-spacing: 1em;
+  --h1-size: 1.6em;
+  --h2-size: 1.35em;
+  --h3-size: 1.15em;
+  --h4-size: 1.05em;
   --h5-size: 1em;
   --h6-size: 1em;
   --zen-inline-code-bg: #e9e9e9;
   --zen-inline-code-ink: #087f73;
   font-weight: 400;
+}
+/* The vault's font-size setting is applied on the scroller; scope this
+   override to Markdown content so interface/sidebar text stays unchanged. */
+body.zen-ink .markdown-source-view.mod-cm6 .cm-scroller,
+body.zen-ink .markdown-preview-view {
+  font-size: 15px;
 }
 body.zen-ink.theme-dark .markdown-preview-view,
 body.zen-ink.theme-dark .markdown-source-view {
@@ -465,14 +471,29 @@ body.zen-ink.theme-dark .markdown-source-view {
   --zen-inline-code-ink: #76d5c4;
 }
 body.zen-ink .markdown-rendered :is(h1, h2, h3, h4, h5, h6) {
-  margin-block: 1.4em 0.65em;
+  margin-block: 1em 0.4em;
   padding: 0;
   border: 0;
 }
-body.zen-ink .markdown-rendered :is(ul, ol) :is(ul, ol) {
-  margin-block: 0.2em;
+/* Live Preview headings use line padding, not rendered heading margins. */
+body.zen-ink .markdown-source-view.mod-cm6 .cm-line.HyperMD-header {
+  padding-block: 0.6em 0.2em;
+  border: 0;
 }
-body.zen-ink .markdown-rendered li > p { margin-block: 0.25em; }
+body.zen-ink .markdown-source-view.mod-cm6 .cm-line.HyperMD-header::after {
+  border: 0;
+}
+body.zen-ink .markdown-source-view {
+  --code-block-padding: 10px 12px;
+  --indentation-guide-width: 0;
+}
+body.zen-ink .markdown-rendered :is(ul, ol) {
+  margin-block: 0.4em;
+}
+body.zen-ink .markdown-rendered :is(ul, ol) :is(ul, ol) {
+  margin-block: 0.1em;
+}
+body.zen-ink .markdown-rendered li > p { margin-block: 0.1em; }
 body.zen-ink .markdown-rendered blockquote {
   border-left: 3px solid var(--text-faint);
   padding: 0 0 0 1em;
