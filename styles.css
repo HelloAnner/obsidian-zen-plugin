@@ -193,6 +193,17 @@ body.zen-hide-side-headers .workspace-split.mod-right-split .nav-header {
 }
 
 
+/* Zen — 右侧栏保留大纲页签与折叠按钮，仅隐藏辅助面板入口。
+   不禁用核心插件，原面板仍可通过命令访问。 */
+body.zen-hide-secondary-right-tabs .workspace-split.mod-right-split .workspace-tab-header:is(
+  [data-type="backlink"],
+  [data-type="outgoing-link"],
+  [data-type="tag"],
+  [data-type="all-properties"]
+) {
+  display: none !important;
+}
+
 /* Zen — 波浪下划线（Cmd+Shift+U） */
 body.zen-ink u.zen-wavy,
 body.zen-ink .markdown-preview-view u.zen-wavy {
