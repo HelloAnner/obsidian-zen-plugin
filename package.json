@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "esbuild src/main.ts --bundle --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view --external:@codemirror/language --external:fs --external:path --external:os --external:crypto --external:http --external:https --external:net --external:tls --external:url --external:util --external:stream --external:zlib --external:events --external:buffer --external:assert --external:string_decoder --external:child_process --format=cjs --target=es2018 --outfile=main.js --watch",
     "build": "esbuild src/main.ts --bundle --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view --external:@codemirror/language --external:fs --external:path --external:os --external:crypto --external:http --external:https --external:net --external:tls --external:url --external:util --external:stream --external:zlib --external:events --external:buffer --external:assert --external:string_decoder --external:child_process --format=cjs --target=es2018 --minify --outfile=main.js",
+    "test": "node scripts/test-note-switcher.mjs",
     "deploy": "npm run build && node scripts/install.mjs"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.1",
+    "sortablejs": "^1.15.7",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0"
   },
@@ -28,6 +30,7 @@
     "@codemirror/view": "^6.43.15",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^22.0.0",
+    "@types/sortablejs": "^1.15.9",
     "esbuild": "^0.24.0",
     "obsidian": "^1.7.0",
     "typescript": "^5.6.0"

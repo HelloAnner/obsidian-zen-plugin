@@ -10,6 +10,7 @@ import { ZenImageLightboxFeature } from './image-lightbox/image-lightbox-feature
 import { ZenHeadingNumbersFeature } from './heading-numbers/heading-numbers-feature';
 import { ZenHighlightFeature } from './highlight/highlight-feature';
 import { ZenOutlineFeature } from './outline/outline-feature';
+import { ZenNoteSwitcherFeature } from './note-switcher/note-switcher-feature';
 
 /**
  * Zen — 高度定制的 Obsidian 界面插件
@@ -38,6 +39,7 @@ export default class ZenPlugin extends Plugin {
     new ZenHeadingNumbersFeature(this).load();
     new ZenHighlightFeature(this).load();
     new ZenOutlineFeature(this).load();
+    new ZenNoteSwitcherFeature(this).load();
   }
 
   private applyZenStyles() {

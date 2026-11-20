@@ -286,6 +286,78 @@ body.zen-ink .markdown-preview-view table mark {
   animation: none !important;
 }
 
+/* Zen — 原生笔记列表：高密度标题，悬停移除，长按拖动排序 */
+.zen-note-switcher {
+  padding: 4px 8px;
+  overflow-y: auto;
+}
+.zen-note-switcher-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.zen-note-switcher-row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 28px;
+  border-radius: var(--radius-s);
+}
+.zen-note-switcher-row:hover { background: var(--background-modifier-hover); }
+.zen-note-switcher-row.is-active {
+  background: var(--nav-item-background-active);
+  color: var(--nav-item-color-active);
+}
+.zen-note-switcher .zen-note-switcher-open {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  padding: 0 8px;
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-interface);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-normal);
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.zen-note-switcher-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zen-note-switcher .zen-note-switcher-remove {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  color: var(--text-muted);
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.zen-note-switcher-row:hover .zen-note-switcher-remove,
+.zen-note-switcher-row:focus-within .zen-note-switcher-remove {
+  opacity: 1;
+  pointer-events: auto;
+}
+.zen-note-switcher-remove svg { width: 14px; height: 14px; }
+.zen-note-switcher-ghost { opacity: 0.35; }
+/* Keep the native drag handle accessible if this panel is docked in the root. */
+body.zen-single-tab .workspace-split.mod-root .workspace-tabs:has(.workspace-leaf-content[data-type="zen-note-switcher"]) > .workspace-tab-header-container,
+body.zen-single-tab .workspace-split.mod-root .workspace-leaf-content[data-type="zen-note-switcher"] .view-header {
+  display: flex !important;
+}
+
 /* Zen — 代码块美观：纸感底色 + 圆角边框，亮暗自适应；C++ 等语法高亮保留主题配色 */
 body.zen-ink {
   --zen-code-bg: #f6f5f1;

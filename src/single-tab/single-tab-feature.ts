@@ -1,4 +1,4 @@
-import { Plugin } from 'obsidian';
+import { MarkdownView, Plugin } from 'obsidian';
 
 /**
  * Zen 单文档模式
@@ -23,11 +23,15 @@ export class ZenSingleTabFeature {
 
   private closeOtherRootLeaves(): void {
     if (this.closing) return;
+    const activeLeaf = this.app.workspace.activeLeaf;
+    // Focusing a sidebar (or opening a non-Markdown/custom view) must never
+    // close documents. Native ItemViews can also be docked in the root split.
+    if (!activeLeaf || !(activeLeaf.view instanceof MarkdownView)
+      || activeLeaf.getRoot() !== this.app.workspace.rootSplit) return;
     this.closing = true;
     try {
-      const activeLeaf = this.app.workspace.activeLeaf;
       this.app.workspace.iterateRootLeaves((leaf) => {
-        if (leaf !== activeLeaf) {
+        if (leaf !== activeLeaf && leaf.view instanceof MarkdownView) {
           leaf.detach();
         }
       });

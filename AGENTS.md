@@ -34,6 +34,7 @@ npm run deploy
 ## 结构
 
 - `src/main.ts` — 插件入口（Plugin 子类）：界面定制 + 热重载 + 挂载各 feature
+- `src/note-switcher/` — 会话内固定顺序笔记列表：独立状态模型、原生 ItemView、事件与快捷键控制；页签布局复用 Obsidian 原生拖拽分栏，不自行实现停靠布局。
 - `src/publish/` — 发布功能模块（移植自 obsidian-publish-everywhere，已改名 ZenPublishFeature）
   - `publish-feature.ts` — 模块入口，通过 shim（app/addCommand/loadData…）挂在 ZenPlugin 上
   - `settings.ts` — 设置页（ZenPublishSettingTab）
@@ -52,6 +53,14 @@ npm run deploy
 - 每个界面定制功能用独立的 body class（如 `zen-hide-left-ribbon`）+ styles.css 规则实现，便于后续做设置开关
 - 大功能按 `src/<feature>/` 独立目录组织，入口只负责挂载
 - `main.js` 为构建产物，不提交；本地通过 deploy 生成
+
+## 笔记切换列表约定
+
+- 列表仅存内存；新打开的 Markdown 笔记追加末尾，已存在的笔记只更新当前指针，不改变用户顺序。
+- 列表使用紧凑纯标题样式，不显示编号、工具栏或说明文字；长按拖动排序使用 SortableJS，悬停或键盘聚焦时才显示移除按钮。
+- 列表中的移除操作仅移除条目，严禁删除笔记文件；排序与当前选择分别维护。
+- `Option + ↑ / ↓` 按固定列表顺序切换，首尾不循环；保留命令入口供用户自定义快捷键。
+- 使用 Obsidian 原生视图页签，允许拖动到侧栏下半区或其他分栏；不能因单文档模式而误关闭该视图，也不能在切换笔记时重置用户停靠布局。
 
 ## 功能清单
 
