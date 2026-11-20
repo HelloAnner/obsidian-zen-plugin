@@ -124,8 +124,22 @@ body.zen-ink .markdown-source-view {
 }
 body.zen-ink :is(.markdown-preview-view, .markdown-source-view) .list-bullet {
   color: transparent !important;
-  font-size: 0;
+  -webkit-text-fill-color: transparent;
+  font-size: inherit;
   text-shadow: none;
+}
+/* Preserve the native character advance: zero font-size collapses its width
+   and places the absolute circle on the text baseline. */
+body.zen-ink .markdown-source-view .list-bullet {
+  font-size: inherit;
+  width: 0.65em;
+  height: 1em;
+  vertical-align: -0.1em;
+}
+body.zen-ink .markdown-source-view .list-bullet::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 body.zen-ink :is(.markdown-preview-view, .markdown-source-view) .list-bullet::after {
   width: 5px;
