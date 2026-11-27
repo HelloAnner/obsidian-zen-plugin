@@ -3,7 +3,12 @@ import test from 'node:test';
 import { ConfluenceMarkdownConverter } from '../src/publish/confluence/markdown-to-confluence';
 
 const convert = (markdown: string) => new ConfluenceMarkdownConverter().convert(markdown);
-const mark = (text: string) => `<span style="background-color: #FFEBE6; color: #172B4D;">${text}</span>`;
+const mark = (text: string) => `<span style="background-color: #FFECB0; color: #172B4D;">${text}</span>`;
+
+test('sets the floating KMS table of contents width', async () => {
+	const html = await convert('## 标题');
+	assert.match(html, /<ac:structured-macro ac:name="easy-heading-free"[^>]*>.*<ac:parameter ac:name="navigationWidth">480<\/ac:parameter>/);
+});
 
 test('converts Obsidian highlights in headings, paragraphs and callouts', async () => {
 	const html = await convert('## 1. ==标题高亮==\n\n正文==**加粗**与 `a==b`==，再 ==高亮==。\n\n> [!note] 提醒\n> 这里有 ==高亮==。');

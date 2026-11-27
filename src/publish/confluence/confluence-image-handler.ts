@@ -103,8 +103,8 @@ export class ConfluenceImageHandler {
 
 	private buildImageMacro(url: string, width?: number): string {
 		const escaped = escapeXmlAttr(url);
-		// 优先使用笔记指定的大小，否则默认 500
-		const finalWidth = width && width > 0 ? width : 500;
+		// 优先使用笔记指定的大小，否则默认 800
+		const finalWidth = width && width > 0 ? width : 800;
 		return `<ac:image ac:width="${finalWidth}"><ri:url ri:value="${escaped}"/></ac:image>`;
 	}
 
