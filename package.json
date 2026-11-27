@@ -6,13 +6,17 @@
   "scripts": {
     "dev": "esbuild src/main.ts --bundle --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view --external:@codemirror/language --external:fs --external:path --external:os --external:crypto --external:http --external:https --external:net --external:tls --external:url --external:util --external:stream --external:zlib --external:events --external:buffer --external:assert --external:string_decoder --external:child_process --format=cjs --target=es2018 --outfile=main.js --watch",
     "build": "esbuild src/main.ts --bundle --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view --external:@codemirror/language --external:fs --external:path --external:os --external:crypto --external:http --external:https --external:net --external:tls --external:url --external:util --external:stream --external:zlib --external:events --external:buffer --external:assert --external:string_decoder --external:child_process --format=cjs --target=es2018 --minify --outfile=main.js",
-    "test": "node scripts/test-note-switcher.mjs",
+    "test": "node scripts/test.mjs",
     "deploy": "npm run build && node scripts/install.mjs"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
     "image-size": "^2.0.2",
     "mdast-util-to-string": "^4.0.0",
+    "micromark-util-chunked": "^2.0.0",
+    "micromark-util-classify-character": "^2.0.0",
+    "micromark-util-resolve-all": "^2.0.0",
+    "micromark-util-types": "^2.0.0",
     "mime-types": "^2.1.35",
     "playwright-core": "1.49.1",
     "rehype-raw": "^7.0.0",

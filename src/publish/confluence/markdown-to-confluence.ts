@@ -1,9 +1,12 @@
+import type { Root } from 'hast';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
+import { visit } from 'unist-util-visit';
+import { remarkObsidianHighlight } from './remark-obsidian-highlight';
 
 export class ConfluenceMarkdownConverter {
 	async convert(markdown: string): Promise<string> {
@@ -30,16 +33,29 @@ export class ConfluenceMarkdownConverter {
 	}
 }
 
-async function markdownToHtml(markdown: string): Promise<string> {
-	const processor = unified()
+function createMarkdownProcessor() {
+	return unified()
 		.use(remarkParse)
 		.use(remarkGfm)
+		.use(remarkObsidianHighlight)
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeRaw)
-		.use(rehypeStringify, { allowDangerousHtml: true });
+		.use(() => (tree: Root) => {
+			visit(tree, 'element', node => {
+				const classes = node.properties.className;
+				if (node.tagName !== 'u' || !Array.isArray(classes) || !classes.includes('zen-wavy')) return;
 
-	const file = await processor.process(markdown);
-	return String(file);
+				node.properties.className = classes.filter(name => name !== 'zen-wavy');
+				if (!node.properties.className.length) delete node.properties.className;
+				const style = String(node.properties.style ?? '').trim();
+				node.properties.style = `${style.replace(/;?$/, style ? '; ' : '')}text-decoration-style: wavy;`;
+			});
+		})
+		.use(rehypeStringify, { allowDangerousHtml: true });
+}
+
+async function markdownToHtml(markdown: string): Promise<string> {
+	return String(await createMarkdownProcessor().process(markdown));
 }
 
 function stripFrontMatter(content: string): string {
@@ -289,13 +305,7 @@ function mapCalloutMacro(calloutType: string): { macroName: string; defaultTitle
 function markdownToHtmlSyncBestEffort(markdown: string): string {
 	// 同步降级：fold 内内容只需要尽量转为 HTML（避免在 replace 回调里 await）
 	// 这里使用最小化处理：只做一次基础转换，不做前置预处理/后置宏替换
-	const processor = unified()
-		.use(remarkParse)
-		.use(remarkGfm)
-		.use(remarkRehype, { allowDangerousHtml: true })
-		.use(rehypeRaw)
-		.use(rehypeStringify, { allowDangerousHtml: true });
-	return String(processor.processSync(markdown));
+	return String(createMarkdownProcessor().processSync(markdown));
 }
 
 function postProcessCodeBlocks(content: string): string {
