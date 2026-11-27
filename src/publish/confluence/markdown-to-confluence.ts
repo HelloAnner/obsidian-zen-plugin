@@ -498,7 +498,6 @@ function addTOCMacro(content: string): string {
 		`<p>` +
 		`<ac:structured-macro ac:name="easy-heading-free" ac:schema-version="1">` +
 		`<ac:parameter ac:name="selector">h1,h2,h3,h4,h5,h6</ac:parameter>` +
-		`<ac:parameter ac:name="navigationWidth">480</ac:parameter>` +
 		`<ac:parameter ac:name="navigationExpandOption">expand-all-by-default</ac:parameter>` +
 		`</ac:structured-macro>` +
 		`</p>`;

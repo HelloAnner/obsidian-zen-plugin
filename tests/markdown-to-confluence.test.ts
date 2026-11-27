@@ -5,9 +5,10 @@ import { ConfluenceMarkdownConverter } from '../src/publish/confluence/markdown-
 const convert = (markdown: string) => new ConfluenceMarkdownConverter().convert(markdown);
 const mark = (text: string) => `<span style="background-color: #FFECB0; color: #172B4D;">${text}</span>`;
 
-test('sets the floating KMS table of contents width', async () => {
+test('uses the default floating KMS table of contents width', async () => {
 	const html = await convert('## 标题');
-	assert.match(html, /<ac:structured-macro ac:name="easy-heading-free"[^>]*>.*<ac:parameter ac:name="navigationWidth">480<\/ac:parameter>/);
+	assert.match(html, /<ac:structured-macro ac:name="easy-heading-free"/);
+	assert.doesNotMatch(html, /ac:name="navigationWidth"/);
 });
 
 test('converts Obsidian highlights in headings, paragraphs and callouts', async () => {
